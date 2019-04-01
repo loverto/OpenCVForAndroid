@@ -1,5 +1,7 @@
 # OpenCV 3.2.0
 
+更新配置，支持android studio 3.3.2
+
 运行前请先安装[OpenCV Manager(必须)](https://github.com/kongqw/FaceDetectLibrary/tree/opencv3.2.0/OpenCVManager)。
 
 本示例基于OpenCV 3.2.0 版本在Android平台实现目标检测和目标追踪
