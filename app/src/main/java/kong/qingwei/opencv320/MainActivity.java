@@ -16,8 +16,6 @@ public class MainActivity extends BaseActivity {
     private final String[] PERMISSIONS = new String[]{Manifest.permission.CAMERA};
     // 识别请求码
     private final int REQUEST_CODE_DETECTION = 0;
-    // 追踪请求码
-    private final int REQUEST_CODE_TRACK = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +31,6 @@ public class MainActivity extends BaseActivity {
                 switch (requestCode) {
                     case REQUEST_CODE_DETECTION:
                         startActivity(new Intent(MainActivity.this, ObjectDetectingActivity.class));
-                        break;
-                    case REQUEST_CODE_TRACK:
-                        startActivity(new Intent(MainActivity.this, ObjectTrackingActivity.class));
                         break;
                     default:
                         break;
@@ -79,13 +74,4 @@ public class MainActivity extends BaseActivity {
         mPermissionsManager.checkPermissions(REQUEST_CODE_DETECTION, PERMISSIONS);
     }
 
-    /**
-     * 目标追踪
-     *
-     * @param view view
-     */
-    public void onTracking(View view) {
-        // 检查权限
-        mPermissionsManager.checkPermissions(REQUEST_CODE_TRACK, PERMISSIONS);
-    }
 }
