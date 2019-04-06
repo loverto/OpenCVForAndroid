@@ -7,7 +7,6 @@ import android.util.Log;
 
 import com.kongqw.listener.OnFaceDetectorListener;
 
-import org.bytedeco.javacpp.opencv_objdetect;
 import org.opencv.R;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;

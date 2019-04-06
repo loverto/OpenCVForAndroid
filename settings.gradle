@@ -1,1 +1,4 @@
-include ':app', 'OpenCVLibrary320'
+include ':app', ':OpenCVLibrary320'
+//def opencvsdk = 'OpenCV-android-sdk'
+//include ':opencv'
+//project(':opencv').projectDir = new File(opencvsdk + '/sdk')

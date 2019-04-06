@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kong.qingwei.opencv320">
 
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.front" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.front.autofocus" android:required="false"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,12 +29,8 @@
             android:name=".ObjectDetectingActivity"
             android:screenOrientation="landscape"
             android:theme="@style/FullscreenTheme" />
-        <!-- 目标追踪Activity -->
-        <activity
-            android:name=".ObjectTrackingActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/FullscreenTheme" />
-        <activity android:name=".BaseActivity"></activity>
+
+        <activity android:name=".FdActivity"></activity>
     </application>
 
 </manifest>
