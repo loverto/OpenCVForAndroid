@@ -7,6 +7,10 @@
         android:id="@+id/photograph_view"
         android:layout_width="400dp"
         android:layout_height="400dp" />
+    <com.kongqw.CameraFaceDetectionView
+        android:id="@+id/cfdv"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
 
     <Button
         android:layout_width="wrap_content"

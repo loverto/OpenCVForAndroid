@@ -47,50 +47,50 @@ public class ObjectDetectingActivity extends BaseActivity {
 
         objectDetectingView = (ObjectDetectingView)findViewById(R.id.photograph_view);
 
-//        cameraFaceDetectionView = (CameraFaceDetectionView) findViewById(R.id.cfdv);
-//
-//        cameraFaceDetectionView.setOnFaceDetectorListener(new OnFaceDetectorListener() {
-//            @Override
-//            public void onFace(Mat mat, Rect rect) {
-//                if (isGettingFace) {
-//                    if (null == mBitmapFace1 || null != mBitmapFace2) {
-//                        mBitmapFace1 = null;
-//                        mBitmapFace2 = null;
-//
-//                        // 保存人脸信息并显示
-//                        FaceUtil.saveImage(ObjectDetectingActivity.this, mat, rect, FACE1);
-//                        mBitmapFace1 = FaceUtil.getImage(ObjectDetectingActivity.this, FACE1);
-//                        cmp = 0.0d;
-//                    } else {
-//                        FaceUtil.saveImage(ObjectDetectingActivity.this, mat, rect, FACE2);
-//                        mBitmapFace2 = FaceUtil.getImage(ObjectDetectingActivity.this, FACE2);
-//
-//                        // 计算相似度
-//                        cmp = FaceUtil.compare(ObjectDetectingActivity.this, FACE1, FACE2);
-//                        Log.i(TAG, "onFace: 相似度 : " + cmp);
-//                    }
-//
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if (null == mBitmapFace1) {
-//                                mImageViewFace1.setImageResource(R.mipmap.ic_launcher);
-//                            } else {
-//                                mImageViewFace1.setImageBitmap(mBitmapFace1);
-//                            }
-//                            if (null == mBitmapFace2) {
-//                                mImageViewFace2.setImageResource(R.mipmap.ic_launcher);
-//                            } else {
-//                                mImageViewFace2.setImageBitmap(mBitmapFace2);
-//                            }
-//                            mCmpPic.setText(String.format("相似度 :  %.2f", cmp) + "%");
-//                        }
-//                    });
-//
-//                    isGettingFace = false;
-//                }
-//            }
-//        });
+        cameraFaceDetectionView = (CameraFaceDetectionView) findViewById(R.id.cfdv);
+
+        cameraFaceDetectionView.setOnFaceDetectorListener(new OnFaceDetectorListener() {
+            @Override
+            public void onFace(Mat mat, Rect rect) {
+                if (isGettingFace) {
+                    if (null == mBitmapFace1 || null != mBitmapFace2) {
+                        mBitmapFace1 = null;
+                        mBitmapFace2 = null;
+
+                        // 保存人脸信息并显示
+                        FaceUtil.saveImage(ObjectDetectingActivity.this, mat, rect, FACE1);
+                        mBitmapFace1 = FaceUtil.getImage(ObjectDetectingActivity.this, FACE1);
+                        cmp = 0.0d;
+                    } else {
+                        FaceUtil.saveImage(ObjectDetectingActivity.this, mat, rect, FACE2);
+                        mBitmapFace2 = FaceUtil.getImage(ObjectDetectingActivity.this, FACE2);
+
+                        // 计算相似度
+                        cmp = FaceUtil.compare(ObjectDetectingActivity.this, FACE1, FACE2);
+                        Log.i(TAG, "onFace: 相似度 : " + cmp);
+                    }
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (null == mBitmapFace1) {
+                                mImageViewFace1.setImageResource(R.mipmap.ic_launcher);
+                            } else {
+                                mImageViewFace1.setImageBitmap(mBitmapFace1);
+                            }
+                            if (null == mBitmapFace2) {
+                                mImageViewFace2.setImageResource(R.mipmap.ic_launcher);
+                            } else {
+                                mImageViewFace2.setImageBitmap(mBitmapFace2);
+                            }
+                            mCmpPic.setText(String.format("相似度 :  %.2f", cmp) + "%");
+                        }
+                    });
+
+                    isGettingFace = false;
+                }
+            }
+        });
 
 
         objectDetectingView.setOnOpenCVLoadListener(new OnOpenCVLoadListener() {
@@ -113,7 +113,7 @@ public class ObjectDetectingActivity extends BaseActivity {
         });
 
         objectDetectingView.loadOpenCV(getApplicationContext());
-        //cameraFaceDetectionView.loadOpenCV(getApplicationContext());
+        cameraFaceDetectionView.loadOpenCV(getApplicationContext());
     }
 
     /**
