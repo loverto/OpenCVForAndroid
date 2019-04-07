@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="kong.qingwei.opencv320">
+    package="com.yinlongfei.opencv">
 
     <application
         android:allowBackup="true"
@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.yinlongfei.opencv.MainActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,12 +19,12 @@
         </activity>
         <!-- 目标检测Activity -->
         <activity
-            android:name=".ObjectDetectingActivity"
+            android:name="com.yinlongfei.opencv.ObjectDetectingActivity"
             android:screenOrientation="landscape"
             android:theme="@style/FullscreenTheme" />
 
-        <activity android:name=".FdActivity"></activity>
-        <activity android:name=".FaceDetectingActivity"></activity>
+        <activity android:name="com.yinlongfei.opencv.FdActivity"></activity>
+        <activity android:name="com.yinlongfei.opencv.FaceDetectingActivity"></activity>
     </application>
 
 </manifest>

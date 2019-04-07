@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="kong.qingwei.opencv320.MainActivity">
+    tools:context="com.yinlongfei.opencv.MainActivity">
 
     <Button
         android:layout_width="match_parent"
