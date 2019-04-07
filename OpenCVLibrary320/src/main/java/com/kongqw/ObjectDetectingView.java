@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import com.kongqw.listener.OnFaceDetectorListener;
+
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
 import org.opencv.core.Rect;
@@ -17,10 +19,18 @@ import java.util.ArrayList;
  */
 public class ObjectDetectingView extends BaseCameraView {
 
+    /**
+     * 日志标记
+     */
     private static final String TAG = "ObjectDetectingView";
+    /**
+     * 对象检测列表
+     */
     private ArrayList<ObjectDetector> mObjectDetects;
 
     private MatOfRect mObject;
+
+    private OnFaceDetectorListener onFaceDetectorListener;
 
     @Override
     public void onOpenCVLoadSuccess() {
@@ -51,6 +61,9 @@ public class ObjectDetectingView extends BaseCameraView {
             Rect[] object = detector.detectObject(mGray, mObject);
             for (Rect rect : object) {
                 Imgproc.rectangle(mRgba, rect.tl(), rect.br(), detector.getRectColor(), 3);
+                if (null!=onFaceDetectorListener){
+                    onFaceDetectorListener.onFace(mRgba,rect);
+                }
             }
         }
 
@@ -77,6 +90,11 @@ public class ObjectDetectingView extends BaseCameraView {
         if (mObjectDetects.contains(detector)) {
             mObjectDetects.remove(detector);
         }
+    }
+
+
+    public void setOnFaceDetectorListener(OnFaceDetectorListener onFaceDetectorListener){
+        this.onFaceDetectorListener = onFaceDetectorListener;
     }
 
 }

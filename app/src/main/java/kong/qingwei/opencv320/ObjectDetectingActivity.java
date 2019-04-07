@@ -1,10 +1,13 @@
 package kong.qingwei.opencv320;
 
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,22 +23,26 @@ import org.opencv.core.Mat;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 
+import java.io.File;
+import java.io.IOException;
+
 
 public class ObjectDetectingActivity extends BaseActivity {
 
     private static final String TAG = "ObjectDetectingActivity";
     private ObjectDetectingView objectDetectingView;
     private ObjectDetector mFaceDetector;
-    private CameraFaceDetectionView cameraFaceDetectionView;
 
     private static final String FACE1 = "face1";
     private static final String FACE2 = "face2";
     private static boolean isGettingFace = false;
     private Bitmap mBitmapFace1;
     private Bitmap mBitmapFace2;
+    private String currentFile ;
     private ImageView mImageViewFace1;
     private ImageView mImageViewFace2;
     private TextView mCmpPic;
+    private Button button;
     private double cmp;
 
 
@@ -47,28 +54,40 @@ public class ObjectDetectingActivity extends BaseActivity {
 
         objectDetectingView = (ObjectDetectingView)findViewById(R.id.photograph_view);
 
-        cameraFaceDetectionView = (CameraFaceDetectionView) findViewById(R.id.cfdv);
 
-        cameraFaceDetectionView.setOnFaceDetectorListener(new OnFaceDetectorListener() {
+        mImageViewFace1 = (ImageView) findViewById(R.id.imageView);
+        mImageViewFace2 = (ImageView) findViewById(R.id.imageView2);
+        mCmpPic = (TextView) findViewById(R.id.textView);
+        button = (Button) findViewById(R.id.button2);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isGettingFace = true;
+            }
+        });
+
+        objectDetectingView.setOnFaceDetectorListener(new OnFaceDetectorListener() {
             @Override
             public void onFace(Mat mat, Rect rect) {
-                if (isGettingFace) {
-                    if (null == mBitmapFace1 || null != mBitmapFace2) {
-                        mBitmapFace1 = null;
-                        mBitmapFace2 = null;
+                //if (isGettingFace) {
+                    // 保存人脸信息并显示
+                    FaceUtil.saveImage(ObjectDetectingActivity.this, mat, rect, FACE1);
+                    mBitmapFace1 = FaceUtil.getImage(ObjectDetectingActivity.this, FACE1);
+                    try {
+                        String[] list = getAssets().list("image");
+                        for (String file:list){
+                            String absolutePath = getFileStreamPath(file).getAbsolutePath();
+                            currentFile = absolutePath;
+                            // 计算相似度
+                            cmp = FaceUtil.compareAbs(ObjectDetectingActivity.this, FACE1, file);
+                            Log.i(TAG, "onFace: 相似度 : " + cmp);
 
-                        // 保存人脸信息并显示
-                        FaceUtil.saveImage(ObjectDetectingActivity.this, mat, rect, FACE1);
-                        mBitmapFace1 = FaceUtil.getImage(ObjectDetectingActivity.this, FACE1);
-                        cmp = 0.0d;
-                    } else {
-                        FaceUtil.saveImage(ObjectDetectingActivity.this, mat, rect, FACE2);
-                        mBitmapFace2 = FaceUtil.getImage(ObjectDetectingActivity.this, FACE2);
-
-                        // 计算相似度
-                        cmp = FaceUtil.compare(ObjectDetectingActivity.this, FACE1, FACE2);
-                        Log.i(TAG, "onFace: 相似度 : " + cmp);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
+
 
                     runOnUiThread(new Runnable() {
                         @Override
@@ -78,17 +97,15 @@ public class ObjectDetectingActivity extends BaseActivity {
                             } else {
                                 mImageViewFace1.setImageBitmap(mBitmapFace1);
                             }
-                            if (null == mBitmapFace2) {
-                                mImageViewFace2.setImageResource(R.mipmap.ic_launcher);
-                            } else {
-                                mImageViewFace2.setImageBitmap(mBitmapFace2);
-                            }
+
+                            mImageViewFace2.setImageURI(Uri.fromFile(new File(currentFile)));
+
                             mCmpPic.setText(String.format("相似度 :  %.2f", cmp) + "%");
                         }
                     });
-
-                    isGettingFace = false;
-                }
+//
+//                    isGettingFace = false;
+//                }
             }
         });
 
@@ -113,7 +130,6 @@ public class ObjectDetectingActivity extends BaseActivity {
         });
 
         objectDetectingView.loadOpenCV(getApplicationContext());
-        cameraFaceDetectionView.loadOpenCV(getApplicationContext());
     }
 
     /**

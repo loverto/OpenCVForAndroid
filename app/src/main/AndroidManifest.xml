@@ -24,6 +24,7 @@
             android:theme="@style/FullscreenTheme" />
 
         <activity android:name=".FdActivity"></activity>
+        <activity android:name=".FaceDetectingActivity"></activity>
     </application>
 
 </manifest>

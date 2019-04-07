@@ -23,8 +23,14 @@ public abstract class BaseCameraView extends JavaCameraView implements LoaderCal
 
     private static final String TAG = "BaseRobotCameraView";
 
+    /**
+     * OpenCv加载成功回调函数
+     */
     public abstract void onOpenCVLoadSuccess();
 
+    /**
+     * OpenCv加载失败回调函数
+     */
     public abstract void onOpenCVLoadFail();
 
     // 标记当前OpenCV加载状态

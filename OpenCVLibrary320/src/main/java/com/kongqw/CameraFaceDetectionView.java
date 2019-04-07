@@ -11,11 +11,13 @@ import org.opencv.R;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
+import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 import java.io.File;
@@ -35,11 +37,6 @@ public class CameraFaceDetectionView extends BaseCameraView {
     //private OnOpenCVInitListener mOnOpenCVInitListener;
     private static final Scalar FACE_RECT_COLOR = new Scalar(0, 255, 0, 255);
     private CascadeClassifier mJavaDetector;
-    // 记录切换摄像头点击次数
-    private int mCameraSwitchCount = 0;
-
-    private Mat mRgba;
-    private Mat mGray;
 
     private int mAbsoluteFaceSize = 0;
     // 脸部占屏幕多大面积的时候开始识别
@@ -47,7 +44,7 @@ public class CameraFaceDetectionView extends BaseCameraView {
 
     @Override
     public void onOpenCVLoadSuccess() {
-        isLoadSuccess = true;
+        //isLoadSuccess = true;
     }
 
     @Override
@@ -61,70 +58,6 @@ public class CameraFaceDetectionView extends BaseCameraView {
 
 
 
-    private boolean isLoadSuccess = false;
-    private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(getContext().getApplicationContext()) {
-
-        @Override
-        public void onManagerConnected(int status) {
-            switch (status) {
-                case LoaderCallbackInterface.SUCCESS:
-                    Log.i(TAG, "onManagerConnected: OpenCV加载成功");
-
-                    try {
-                        InputStream is = getResources().openRawResource(R.raw.lbpcascade_frontalface);
-                        File cascadeDir = getContext().getApplicationContext().getDir("cascade", Context.MODE_PRIVATE);
-                        File cascadeFile = new File(cascadeDir, "lbpcascade_frontalface.xml");
-                        FileOutputStream os = new FileOutputStream(cascadeFile);
-
-                        byte[] buffer = new byte[4096];
-                        int bytesRead;
-                        while ((bytesRead = is.read(buffer)) != -1) {
-                            os.write(buffer, 0, bytesRead);
-                        }
-                        is.close();
-                        os.close();
-
-                        mJavaDetector = new CascadeClassifier(cascadeFile.getAbsolutePath());
-                        if (mJavaDetector.empty()) {
-                            Log.e(TAG, "级联分类器加载失败");
-                            mJavaDetector = null;
-                        }
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Log.e(TAG, "没有找到级联分类器");
-                    }
-                    enableView();
-                    break;
-            }
-        }
-    };
-
-    @Override
-    public void enableView() {
-        if (isLoadSuccess) {
-            super.enableView();
-        }
-    }
-
-    @Override
-    public void disableView() {
-        if (isLoadSuccess) {
-            super.disableView();
-        }
-    }
-
-    @Override
-    public void onCameraViewStarted(int width, int height) {
-        mGray = new Mat();
-        mRgba = new Mat();
-    }
-
-    @Override
-    public void onCameraViewStopped() {
-        mGray.release();
-        mRgba.release();
-    }
 
     @Override
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
@@ -155,36 +88,13 @@ public class CameraFaceDetectionView extends BaseCameraView {
             // 检测到人脸
             Rect[] facesArray = faces.toArray();
             for (Rect aFacesArray : facesArray) {
-                //Core.rectangle(mRgba, aFacesArray.tl(), aFacesArray.br(), FACE_RECT_COLOR, 3);
+                Imgproc.rectangle(mRgba, aFacesArray.tl(), aFacesArray.br(), FACE_RECT_COLOR, 3);
                 if (null != mOnFaceDetectorListener) {
                     mOnFaceDetectorListener.onFace(mRgba, aFacesArray);
                 }
             }
         }
         return mRgba;
-    }
-
-    /**
-     * 切换摄像头
-     *
-     * @return 切换摄像头是否成功
-     */
-    public boolean switchCamera() {
-        // 摄像头总数
-        int numberOfCameras = 0;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.GINGERBREAD) {
-            numberOfCameras = Camera.getNumberOfCameras();
-        }
-        // 2个及以上摄像头
-        if (1 < numberOfCameras) {
-            // 设备没有摄像头
-            int index = ++mCameraSwitchCount % numberOfCameras;
-            disableView();
-            setCameraIndex(index);
-            enableView();
-            return true;
-        }
-        return false;
     }
 
     /**

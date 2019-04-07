@@ -97,6 +97,13 @@ public final class FaceUtil {
 
     /**
      * 特征对比
+     *  1。分别用facedetect功能将两张图片中的人脸检测出来
+     *
+     *  2。将人脸部分的图片剪切出来，存到两张只有人脸的图片里。
+     *
+     *  3。将这两张人脸图片转换成单通道的图像
+     *
+     *  4。使用直方图比较这两张单通道的人脸图像，得出相似度。
      *
      * @param context   Context
      * @param fileName1 人脸特征
@@ -105,9 +112,13 @@ public final class FaceUtil {
      */
     public static double compare(Context context, String fileName1, String fileName2) {
         try {
+            // 获取第一章照片
             String pathFile1 = getFilePath(context, fileName1);
+            // 获取第二章照片
             String pathFile2 = getFilePath(context, fileName2);
+            // 用Opencv加载图片，灰色
             IplImage image1 = cvLoadImage(pathFile1, org.opencv.imgcodecs.Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE);
+            // 用Opencv加载图片
             IplImage image2 = cvLoadImage(pathFile2, org.opencv.imgcodecs.Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE);
             if (null == image1 || null == image2) {
                 return -1;
@@ -120,10 +131,75 @@ public final class FaceUtil {
 
             IplImage imageArr1[] = {image1};
             IplImage imageArr2[] = {image2};
+            // cv直方图
             CvHistogram Histogram1 = CvHistogram.create(1, hist_size, CV_HIST_ARRAY, ranges, 1);
+            // cv直方图
             CvHistogram Histogram2 = CvHistogram.create(1, hist_size, CV_HIST_ARRAY, ranges, 1);
+            // cv 计算直方图
             cvCalcHist(imageArr1, Histogram1, 0, null);
             cvCalcHist(imageArr2, Histogram2, 0, null);
+            // cv 规范化直方图
+            cvNormalizeHist(Histogram1, 100.0);
+            cvNormalizeHist(Histogram2, 100.0);
+            // 参考：http://blog.csdn.net/nicebooks/article/details/8175002
+            double c1 = cvCompareHist(Histogram1, Histogram2, CV_COMP_CORREL) * 100;
+            double c2 = cvCompareHist(Histogram1, Histogram2, CV_COMP_INTERSECT);
+//            Log.i(TAG, "compare: ----------------------------");
+//            Log.i(TAG, "compare: c1 = " + c1);
+//            Log.i(TAG, "compare: c2 = " + c2);
+//            Log.i(TAG, "compare: 平均值 = " + ((c1 + c2) / 2));
+//            Log.i(TAG, "compare: ----------------------------");
+            return (c1 + c2) / 2;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    /**
+     * 特征对比
+     *  1。分别用facedetect功能将两张图片中的人脸检测出来
+     *
+     *  2。将人脸部分的图片剪切出来，存到两张只有人脸的图片里。
+     *
+     *  3。将这两张人脸图片转换成单通道的图像
+     *
+     *  4。使用直方图比较这两张单通道的人脸图像，得出相似度。
+     *
+     * @param context   Context
+     * @param absFileName 人脸特征
+     * @param fileName2 人脸特征
+     * @return 相似度
+     */
+    public static double compareAbs(Context context, String absFileName, String fileName2) {
+        try {
+//            // 获取第一章照片
+//            String pathFile1 = getFilePath(context, absFileName);
+            // 获取第二章照片
+            String pathFile2 = getFilePath(context, fileName2);
+            // 用Opencv加载图片，灰色
+            IplImage image1 = cvLoadImage(absFileName, org.opencv.imgcodecs.Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE);
+            // 用Opencv加载图片
+            IplImage image2 = cvLoadImage(pathFile2, org.opencv.imgcodecs.Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE);
+            if (null == image1 || null == image2) {
+                return -1;
+            }
+
+            int l_bins = 256;
+            int hist_size[] = {l_bins};
+            float v_ranges[] = {0, 255};
+            float ranges[][] = {v_ranges};
+
+            IplImage imageArr1[] = {image1};
+            IplImage imageArr2[] = {image2};
+            // cv直方图
+            CvHistogram Histogram1 = CvHistogram.create(1, hist_size, CV_HIST_ARRAY, ranges, 1);
+            // cv直方图
+            CvHistogram Histogram2 = CvHistogram.create(1, hist_size, CV_HIST_ARRAY, ranges, 1);
+            // cv 计算直方图
+            cvCalcHist(imageArr1, Histogram1, 0, null);
+            cvCalcHist(imageArr2, Histogram2, 0, null);
+            // cv 规范化直方图
             cvNormalizeHist(Histogram1, 100.0);
             cvNormalizeHist(Histogram2, 100.0);
             // 参考：http://blog.csdn.net/nicebooks/article/details/8175002
