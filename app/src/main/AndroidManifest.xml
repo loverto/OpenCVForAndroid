@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.yinlongfei.opencv.MainActivity"
+            android:name=".MainActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,12 +19,13 @@
         </activity>
         <!-- 目标检测Activity -->
         <activity
-            android:name="com.yinlongfei.opencv.ObjectDetectingActivity"
+            android:name=".ObjectDetectingActivity"
             android:screenOrientation="landscape"
             android:theme="@style/FullscreenTheme" />
 
-        <activity android:name="com.yinlongfei.opencv.FdActivity"></activity>
-        <activity android:name="com.yinlongfei.opencv.FaceDetectingActivity"></activity>
+        <activity android:name=".FdActivity"></activity>
+        <activity android:name=".FaceDetectingActivity"></activity>
+        <activity android:name=".DnnActivity"></activity>
     </application>
 
 </manifest>

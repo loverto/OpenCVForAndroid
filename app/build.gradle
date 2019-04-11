@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
 
     defaultConfig {
-        applicationId "kong.qingwei.opencv320"
+        applicationId "com.yinlongfei.opencv"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1

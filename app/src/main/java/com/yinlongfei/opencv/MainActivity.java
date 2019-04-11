@@ -30,7 +30,7 @@ public class MainActivity extends BaseActivity {
                 // 权限通过
                 switch (requestCode) {
                     case REQUEST_CODE_DETECTION:
-                        startActivity(new Intent(MainActivity.this, ObjectDetectingActivity.class));
+                        startActivity(new Intent(MainActivity.this, DnnActivity.class));
                         break;
                     default:
                         break;
