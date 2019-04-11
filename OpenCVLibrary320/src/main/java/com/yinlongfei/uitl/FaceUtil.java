@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
@@ -54,6 +55,7 @@ public final class FaceUtil {
         Mat mat = new Mat();
         Size size = new Size(100, 100);
         Imgproc.resize(sub, mat, size);
+        Log.i(TAG, "文件保存路径"+fileName);
         return         imwrite(getFilePath(context, fileName), mat);
     }
 
