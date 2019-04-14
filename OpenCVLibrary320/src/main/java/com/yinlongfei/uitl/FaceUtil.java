@@ -37,6 +37,11 @@ public final class FaceUtil {
     private FaceUtil() {
     }
 
+
+    public static boolean saveImage(Context context,Mat image,String filename){
+        return imwrite(getFilePath(context,filename),image);
+    }
+
     /**
      * 特征保存
      *
