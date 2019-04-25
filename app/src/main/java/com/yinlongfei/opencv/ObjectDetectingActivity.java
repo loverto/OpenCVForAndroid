@@ -3,8 +3,11 @@ package com.yinlongfei.opencv;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,10 +16,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.yinlongfei.ObjectDetectingView;
 import com.yinlongfei.ObjectDetector;
 import com.yinlongfei.listener.OnFaceDetectorListener;
 import com.yinlongfei.listener.OnOpenCVLoadListener;
+import com.yinlongfei.opencv.api.ServiceAPI;
+import com.yinlongfei.opencv.entity.Photo;
+import com.yinlongfei.opencv.entity.User;
 import com.yinlongfei.uitl.FaceUtil;
 
 import org.opencv.android.Utils;
@@ -29,7 +38,6 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -37,6 +45,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class ObjectDetectingActivity extends BaseActivity {
@@ -51,7 +67,7 @@ public class ObjectDetectingActivity extends BaseActivity {
     private Bitmap mBitmapFace1;
     private Bitmap mBitmapFace2;
     private String currentFile ;
-    private User currentUser;
+    private Photo currentPhoto;
     private ImageView mImageViewFace1;
     private ImageView mImageViewFace2;
     private TextView mCmpPic;
@@ -59,9 +75,10 @@ public class ObjectDetectingActivity extends BaseActivity {
     private double cmp;
     private  TextToSpeech textToSpeech;
 
-    private Map<String,User> hashMap = new HashMap<>();
+    private Map<String, Photo> hashMap = new HashMap<>();
     private List<String> images = new ArrayList<>();
-    private Map<String,User> cacheMap = new HashMap();
+    private Map<String, Photo> cacheMap = new HashMap();
+
 
 
 
@@ -112,23 +129,79 @@ public class ObjectDetectingActivity extends BaseActivity {
     }
 
 
+    private Observable<User> account;
+    private Observable<List<Photo>> serverAPIPhoto;
 
     private void init(){
-        // 用文件存储照片信息
-        String fileName = "image/yinlongfei.jpg";
-        saveFeatuer(fileName);
-        User user = new User();
-        user.setOriginUrl(fileName);
-        String replace = fileName.replace("/", "");
-        String replace1 = replace.replace(".", "");
-        String featureUrl = replace1 + "featuer";
-        user.setFeatureUrl(featureUrl);
-        user.setName("殷龙飞");
-        hashMap.put(featureUrl,user);
-        images.add(featureUrl);
+        //ServiceAPI serverAPI = App.getServerAPI();
+        account = App.getServerAPI().getAccount();
+
+        serverAPIPhoto = App.getServerAPI().getPhoto(0, 100000);
 
 
-        //
+        account.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(new Consumer<User>() {
+                    @Override
+                    public void accept(User user) throws Exception {
+                        Log.d(TAG, "获取帐号信息成功"+user.toString());
+                        App.getAccountManager().setAccount(user);
+                        System.out.println(user);
+
+                    }
+                }).observeOn(Schedulers.io())
+                .flatMap(new Function<User, ObservableSource<List<Photo>>>() {
+                             @Override
+                             public ObservableSource<List<Photo>> apply(User user) throws Exception {
+                                 return serverAPIPhoto;
+                             }
+                         })
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<List<Photo>>() {
+                            @Override
+                            public void accept(List<Photo> photos) throws Exception {
+                                //遍历图片，缓存图片
+                                for (int i = 0; i < photos.size(); i++) {
+                                    Photo photo = photos.get(i);
+                                    Log.i(TAG, photo.toString());
+                                    String originUrl = photo.getOriginUrl();
+                                    String url = "http://th.minio.boyuanziben.cn" + originUrl;
+                                    Glide.with(ObjectDetectingActivity.this)
+                                            .load(url)
+                                            .into(new SimpleTarget<Drawable>() {
+                                                @Override
+                                                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                                    Log.i(TAG,"资源准备好了，请挥霍");
+                                                }
+                                            });
+                                }
+                                // 照片不为空，开始处理
+                                if (hashMap.isEmpty()|| hashMap.size()==0){
+                                    // 用文件存储照片信息
+                                    String fileName = "image/yinlongfei.jpg";
+                                    saveFeatuer(fileName);
+                                    Photo photo = new Photo();
+                                    photo.setOriginUrl(fileName);
+                                    String replace = fileName.replace("/", "");
+                                    String replace1 = replace.replace(".", "");
+                                    String featureUrl = replace1 + "featuer";
+                                    photo.setFeatureUrl(featureUrl);
+                                    photo.setName("殷龙飞");
+                                    hashMap.put(featureUrl, photo);
+                                    images.add(featureUrl);
+                                }
+
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                // 请求接口异常
+                                Log.i(TAG, "信息异常："+throwable.getMessage());
+                            }
+                        });
+
+
+
     }
 
     /**
@@ -183,7 +256,6 @@ public class ObjectDetectingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_object_detecting);
-
         objectDetectingView = (ObjectDetectingView)findViewById(R.id.photograph_view);
 
         TextToSpeech.OnInitListener onInitListener = new TextToSpeech.OnInitListener() {
@@ -229,9 +301,9 @@ public class ObjectDetectingActivity extends BaseActivity {
                         //FaceUtil.saveImage(ObjectDetectingActivity.this,mat,"test");
                         mBitmapFace1 = FaceUtil.getImage(ObjectDetectingActivity.this, FACE1);
                         for (String file: images){
-                            User user = hashMap.get(file);
-                            currentUser = user;
-                            String featureUrl = user.getFeatureUrl();
+                            Photo photo = hashMap.get(file);
+                            currentPhoto = photo;
+                            String featureUrl = photo.getFeatureUrl();
                             String absolutePath = ObjectDetectingActivity.this.getFilesDir().getPath() + featureUrl+".jpg";
                             currentFile = absolutePath;
                             // 计算相似度
@@ -268,17 +340,17 @@ public class ObjectDetectingActivity extends BaseActivity {
 //
 // }
                             if (cmp > 20){
-                                cacheMap.put(currentUser.getOriginUrl(),currentUser);
+                                cacheMap.put(currentPhoto.getOriginUrl(), currentPhoto);
                             }
 
-                            if(cacheMap.get(currentUser.getOriginUrl())!=null){
+                            if(cacheMap.get(currentPhoto.getOriginUrl())!=null){
                                 String text = "欢迎亲爱的%s同学";
-                                String welcome = String.format(text, currentUser.getName());
+                                String welcome = String.format(text, currentPhoto.getName());
                                 //speakOut(welcome);
                                 String text1 = String.format("相似度 :  %.2f", cmp) + "%";
                                 mCmpPic.setText(welcome+text1);
 //                                Bitmap bitmap = BitmapFactory.decodeFile(currentFile);
-                                Bitmap bitmap = readImage(ObjectDetectingActivity.this,currentUser.getOriginUrl());
+                                Bitmap bitmap = readImage(ObjectDetectingActivity.this, currentPhoto.getOriginUrl());
                                 mImageViewFace2.setImageBitmap(bitmap);
                             }
 
