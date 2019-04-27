@@ -65,15 +65,37 @@ public class Imgproc {
             CV_THRESH_TRIANGLE = 16;
 
 
+    // C++: enum InterpolationMasks
+    public static final int
+            INTER_BITS = 5,
+            INTER_BITS2 = INTER_BITS * 2,
+            INTER_TAB_SIZE = 1 << INTER_BITS,
+            INTER_TAB_SIZE2 = INTER_TAB_SIZE * INTER_TAB_SIZE;
+
+
+    // C++: enum MorphTypes
+    public static final int
+            MORPH_ERODE = 0,
+            MORPH_DILATE = 1,
+            MORPH_OPEN = 2,
+            MORPH_CLOSE = 3,
+            MORPH_GRADIENT = 4,
+            MORPH_TOPHAT = 5,
+            MORPH_BLACKHAT = 6,
+            MORPH_HITMISS = 7;
+
+
+    // C++: enum FloodFillFlags
+    public static final int
+            FLOODFILL_FIXED_RANGE = 1 << 16,
+            FLOODFILL_MASK_ONLY = 1 << 17;
+
+
+    // C++: enum <unnamed>
     public static final int
             LINE_AA = 16,
             LINE_8 = 8,
             LINE_4 = 4,
-            CV_BLUR_NO_SCALE = 0,
-            CV_BLUR = 1,
-            CV_GAUSSIAN = 2,
-            CV_MEDIAN = 3,
-            CV_BILATERAL = 4,
             CV_GAUSSIAN_5x5 = 7,
             CV_SCHARR = -1,
             CV_MAX_SOBEL_KSIZE = 7,
@@ -81,10 +103,6 @@ public class Imgproc {
             CV_mRGBA2RGBA = 126,
             CV_WARP_FILL_OUTLIERS = 8,
             CV_WARP_INVERSE_MAP = 16,
-            CV_SHAPE_RECT = 0,
-            CV_SHAPE_CROSS = 1,
-            CV_SHAPE_ELLIPSE = 2,
-            CV_SHAPE_CUSTOM = 100,
             CV_CHAIN_CODE = 0,
             CV_LINK_RUNS = 5,
             CV_POLY_APPROX_DP = 0,
@@ -97,7 +115,7 @@ public class Imgproc {
             CV_COMP_CHISQR = 1,
             CV_COMP_INTERSECT = 2,
             CV_COMP_BHATTACHARYYA = 3,
-            CV_COMP_HELLINGER = CV_COMP_BHATTACHARYYA,
+            CV_COMP_HELLINGER = 3,
             CV_COMP_CHISQR_ALT = 4,
             CV_COMP_KL_DIV = 5,
             CV_DIST_MASK_3 = 3,
@@ -117,18 +135,77 @@ public class Imgproc {
             CV_HOUGH_STANDARD = 0,
             CV_HOUGH_PROBABILISTIC = 1,
             CV_HOUGH_MULTI_SCALE = 2,
-            CV_HOUGH_GRADIENT = 3,
-            MORPH_ERODE = 0,
-            MORPH_DILATE = 1,
-            MORPH_OPEN = 2,
-            MORPH_CLOSE = 3,
-            MORPH_GRADIENT = 4,
-            MORPH_TOPHAT = 5,
-            MORPH_BLACKHAT = 6,
-            MORPH_HITMISS = 7,
-            MORPH_RECT = 0,
-            MORPH_CROSS = 1,
-            MORPH_ELLIPSE = 2,
+            CV_HOUGH_GRADIENT = 3;
+
+
+    // C++: enum HoughModes
+    public static final int
+            HOUGH_STANDARD = 0,
+            HOUGH_PROBABILISTIC = 1,
+            HOUGH_MULTI_SCALE = 2,
+            HOUGH_GRADIENT = 3;
+
+
+    // C++: enum ConnectedComponentsAlgorithmsTypes
+    public static final int
+            CCL_WU = 0,
+            CCL_DEFAULT = -1,
+            CCL_GRANA = 1;
+
+
+    // C++: enum GrabCutModes
+    public static final int
+            GC_INIT_WITH_RECT = 0,
+            GC_INIT_WITH_MASK = 1,
+            GC_EVAL = 2,
+            GC_EVAL_FREEZE_MODEL = 3;
+
+
+    // C++: enum GrabCutClasses
+    public static final int
+            GC_BGD = 0,
+            GC_FGD = 1,
+            GC_PR_BGD = 2,
+            GC_PR_FGD = 3;
+
+
+    // C++: enum ColormapTypes
+    public static final int
+            COLORMAP_AUTUMN = 0,
+            COLORMAP_BONE = 1,
+            COLORMAP_JET = 2,
+            COLORMAP_WINTER = 3,
+            COLORMAP_RAINBOW = 4,
+            COLORMAP_OCEAN = 5,
+            COLORMAP_SUMMER = 6,
+            COLORMAP_SPRING = 7,
+            COLORMAP_COOL = 8,
+            COLORMAP_HSV = 9,
+            COLORMAP_PINK = 10,
+            COLORMAP_HOT = 11,
+            COLORMAP_PARULA = 12,
+            COLORMAP_MAGMA = 13,
+            COLORMAP_INFERNO = 14,
+            COLORMAP_PLASMA = 15,
+            COLORMAP_VIRIDIS = 16,
+            COLORMAP_CIVIDIS = 17,
+            COLORMAP_TWILIGHT = 18,
+            COLORMAP_TWILIGHT_SHIFTED = 19;
+
+
+    // C++: enum HistCompMethods
+    public static final int
+            HISTCMP_CORREL = 0,
+            HISTCMP_CHISQR = 1,
+            HISTCMP_INTERSECT = 2,
+            HISTCMP_BHATTACHARYYA = 3,
+            HISTCMP_HELLINGER = 3,
+            HISTCMP_CHISQR_ALT = 4,
+            HISTCMP_KL_DIV = 5;
+
+
+    // C++: enum InterpolationFlags
+    public static final int
             INTER_NEAREST = 0,
             INTER_LINEAR = 1,
             INTER_CUBIC = 2,
@@ -137,101 +214,56 @@ public class Imgproc {
             INTER_LINEAR_EXACT = 5,
             INTER_MAX = 7,
             WARP_FILL_OUTLIERS = 8,
-            WARP_INVERSE_MAP = 16,
-            WARP_POLAR_LINEAR = 0,
-            WARP_POLAR_LOG = 256,
-            INTER_BITS = 5,
-            INTER_BITS2 = INTER_BITS * 2,
-            INTER_TAB_SIZE = 1 << INTER_BITS,
-            INTER_TAB_SIZE2 = INTER_TAB_SIZE * INTER_TAB_SIZE,
-            DIST_USER = -1,
-            DIST_L1 = 1,
-            DIST_L2 = 2,
-            DIST_C = 3,
-            DIST_L12 = 4,
-            DIST_FAIR = 5,
-            DIST_WELSCH = 6,
-            DIST_HUBER = 7,
-            DIST_MASK_3 = 3,
-            DIST_MASK_5 = 5,
-            DIST_MASK_PRECISE = 0,
-            THRESH_BINARY = 0,
-            THRESH_BINARY_INV = 1,
-            THRESH_TRUNC = 2,
-            THRESH_TOZERO = 3,
-            THRESH_TOZERO_INV = 4,
-            THRESH_MASK = 7,
-            THRESH_OTSU = 8,
-            THRESH_TRIANGLE = 16,
-            ADAPTIVE_THRESH_MEAN_C = 0,
-            ADAPTIVE_THRESH_GAUSSIAN_C = 1,
-            PROJ_SPHERICAL_ORTHO = 0,
-            PROJ_SPHERICAL_EQRECT = 1,
-            GC_BGD = 0,
-            GC_FGD = 1,
-            GC_PR_BGD = 2,
-            GC_PR_FGD = 3,
-            GC_INIT_WITH_RECT = 0,
-            GC_INIT_WITH_MASK = 1,
-            GC_EVAL = 2,
-            GC_EVAL_FREEZE_MODEL = 3,
-            DIST_LABEL_CCOMP = 0,
-            DIST_LABEL_PIXEL = 1,
-            FLOODFILL_FIXED_RANGE = 1 << 16,
-            FLOODFILL_MASK_ONLY = 1 << 17,
-            CC_STAT_LEFT = 0,
-            CC_STAT_TOP = 1,
-            CC_STAT_WIDTH = 2,
-            CC_STAT_HEIGHT = 3,
-            CC_STAT_AREA = 4,
-            CC_STAT_MAX = 5,
-            CCL_WU = 0,
-            CCL_DEFAULT = -1,
-            CCL_GRANA = 1,
-            RETR_EXTERNAL = 0,
-            RETR_LIST = 1,
-            RETR_CCOMP = 2,
-            RETR_TREE = 3,
-            RETR_FLOODFILL = 4,
+            WARP_INVERSE_MAP = 16;
+
+
+    // C++: enum ContourApproximationModes
+    public static final int
             CHAIN_APPROX_NONE = 1,
             CHAIN_APPROX_SIMPLE = 2,
             CHAIN_APPROX_TC89_L1 = 3,
-            CHAIN_APPROX_TC89_KCOS = 4,
+            CHAIN_APPROX_TC89_KCOS = 4;
+
+
+    // C++: enum ShapeMatchModes
+    public static final int
             CONTOURS_MATCH_I1 = 1,
             CONTOURS_MATCH_I2 = 2,
-            CONTOURS_MATCH_I3 = 3,
-            HOUGH_STANDARD = 0,
-            HOUGH_PROBABILISTIC = 1,
-            HOUGH_MULTI_SCALE = 2,
-            HOUGH_GRADIENT = 3,
-            LSD_REFINE_NONE = 0,
-            LSD_REFINE_STD = 1,
-            LSD_REFINE_ADV = 2,
-            HISTCMP_CORREL = 0,
-            HISTCMP_CHISQR = 1,
-            HISTCMP_INTERSECT = 2,
-            HISTCMP_BHATTACHARYYA = 3,
-            HISTCMP_HELLINGER = HISTCMP_BHATTACHARYYA,
-            HISTCMP_CHISQR_ALT = 4,
-            HISTCMP_KL_DIV = 5,
+            CONTOURS_MATCH_I3 = 3;
+
+
+    // C++: enum WarpPolarMode
+    public static final int
+            WARP_POLAR_LINEAR = 0,
+            WARP_POLAR_LOG = 256;
+
+
+    // C++: enum UndistortTypes
+    public static final int
+            PROJ_SPHERICAL_ORTHO = 0,
+            PROJ_SPHERICAL_EQRECT = 1;
+
+
+    // C++: enum ColorConversionCodes
+    public static final int
             COLOR_BGR2BGRA = 0,
-            COLOR_RGB2RGBA = COLOR_BGR2BGRA,
+            COLOR_RGB2RGBA = 0,
             COLOR_BGRA2BGR = 1,
-            COLOR_RGBA2RGB = COLOR_BGRA2BGR,
+            COLOR_RGBA2RGB = 1,
             COLOR_BGR2RGBA = 2,
-            COLOR_RGB2BGRA = COLOR_BGR2RGBA,
+            COLOR_RGB2BGRA = 2,
             COLOR_RGBA2BGR = 3,
-            COLOR_BGRA2RGB = COLOR_RGBA2BGR,
+            COLOR_BGRA2RGB = 3,
             COLOR_BGR2RGB = 4,
-            COLOR_RGB2BGR = COLOR_BGR2RGB,
+            COLOR_RGB2BGR = 4,
             COLOR_BGRA2RGBA = 5,
-            COLOR_RGBA2BGRA = COLOR_BGRA2RGBA,
+            COLOR_RGBA2BGRA = 5,
             COLOR_BGR2GRAY = 6,
             COLOR_RGB2GRAY = 7,
             COLOR_GRAY2BGR = 8,
-            COLOR_GRAY2RGB = COLOR_GRAY2BGR,
+            COLOR_GRAY2RGB = 8,
             COLOR_GRAY2BGRA = 9,
-            COLOR_GRAY2RGBA = COLOR_GRAY2BGRA,
+            COLOR_GRAY2RGBA = 9,
             COLOR_BGRA2GRAY = 10,
             COLOR_RGBA2GRAY = 11,
             COLOR_BGR2BGR565 = 12,
@@ -302,83 +334,83 @@ public class Imgproc {
             COLOR_YUV2BGR_NV12 = 91,
             COLOR_YUV2RGB_NV21 = 92,
             COLOR_YUV2BGR_NV21 = 93,
-            COLOR_YUV420sp2RGB = COLOR_YUV2RGB_NV21,
-            COLOR_YUV420sp2BGR = COLOR_YUV2BGR_NV21,
+            COLOR_YUV420sp2RGB = 92,
+            COLOR_YUV420sp2BGR = 93,
             COLOR_YUV2RGBA_NV12 = 94,
             COLOR_YUV2BGRA_NV12 = 95,
             COLOR_YUV2RGBA_NV21 = 96,
             COLOR_YUV2BGRA_NV21 = 97,
-            COLOR_YUV420sp2RGBA = COLOR_YUV2RGBA_NV21,
-            COLOR_YUV420sp2BGRA = COLOR_YUV2BGRA_NV21,
+            COLOR_YUV420sp2RGBA = 96,
+            COLOR_YUV420sp2BGRA = 97,
             COLOR_YUV2RGB_YV12 = 98,
             COLOR_YUV2BGR_YV12 = 99,
             COLOR_YUV2RGB_IYUV = 100,
             COLOR_YUV2BGR_IYUV = 101,
-            COLOR_YUV2RGB_I420 = COLOR_YUV2RGB_IYUV,
-            COLOR_YUV2BGR_I420 = COLOR_YUV2BGR_IYUV,
-            COLOR_YUV420p2RGB = COLOR_YUV2RGB_YV12,
-            COLOR_YUV420p2BGR = COLOR_YUV2BGR_YV12,
+            COLOR_YUV2RGB_I420 = 100,
+            COLOR_YUV2BGR_I420 = 101,
+            COLOR_YUV420p2RGB = 98,
+            COLOR_YUV420p2BGR = 99,
             COLOR_YUV2RGBA_YV12 = 102,
             COLOR_YUV2BGRA_YV12 = 103,
             COLOR_YUV2RGBA_IYUV = 104,
             COLOR_YUV2BGRA_IYUV = 105,
-            COLOR_YUV2RGBA_I420 = COLOR_YUV2RGBA_IYUV,
-            COLOR_YUV2BGRA_I420 = COLOR_YUV2BGRA_IYUV,
-            COLOR_YUV420p2RGBA = COLOR_YUV2RGBA_YV12,
-            COLOR_YUV420p2BGRA = COLOR_YUV2BGRA_YV12,
+            COLOR_YUV2RGBA_I420 = 104,
+            COLOR_YUV2BGRA_I420 = 105,
+            COLOR_YUV420p2RGBA = 102,
+            COLOR_YUV420p2BGRA = 103,
             COLOR_YUV2GRAY_420 = 106,
-            COLOR_YUV2GRAY_NV21 = COLOR_YUV2GRAY_420,
-            COLOR_YUV2GRAY_NV12 = COLOR_YUV2GRAY_420,
-            COLOR_YUV2GRAY_YV12 = COLOR_YUV2GRAY_420,
-            COLOR_YUV2GRAY_IYUV = COLOR_YUV2GRAY_420,
-            COLOR_YUV2GRAY_I420 = COLOR_YUV2GRAY_420,
-            COLOR_YUV420sp2GRAY = COLOR_YUV2GRAY_420,
-            COLOR_YUV420p2GRAY = COLOR_YUV2GRAY_420,
+            COLOR_YUV2GRAY_NV21 = 106,
+            COLOR_YUV2GRAY_NV12 = 106,
+            COLOR_YUV2GRAY_YV12 = 106,
+            COLOR_YUV2GRAY_IYUV = 106,
+            COLOR_YUV2GRAY_I420 = 106,
+            COLOR_YUV420sp2GRAY = 106,
+            COLOR_YUV420p2GRAY = 106,
             COLOR_YUV2RGB_UYVY = 107,
             COLOR_YUV2BGR_UYVY = 108,
-            COLOR_YUV2RGB_Y422 = COLOR_YUV2RGB_UYVY,
-            COLOR_YUV2BGR_Y422 = COLOR_YUV2BGR_UYVY,
-            COLOR_YUV2RGB_UYNV = COLOR_YUV2RGB_UYVY,
-            COLOR_YUV2BGR_UYNV = COLOR_YUV2BGR_UYVY,
+            COLOR_YUV2RGB_Y422 = 107,
+            COLOR_YUV2BGR_Y422 = 108,
+            COLOR_YUV2RGB_UYNV = 107,
+            COLOR_YUV2BGR_UYNV = 108,
             COLOR_YUV2RGBA_UYVY = 111,
             COLOR_YUV2BGRA_UYVY = 112,
-            COLOR_YUV2RGBA_Y422 = COLOR_YUV2RGBA_UYVY,
-            COLOR_YUV2BGRA_Y422 = COLOR_YUV2BGRA_UYVY,
-            COLOR_YUV2RGBA_UYNV = COLOR_YUV2RGBA_UYVY,
-            COLOR_YUV2BGRA_UYNV = COLOR_YUV2BGRA_UYVY,
+            COLOR_YUV2RGBA_Y422 = 111,
+            COLOR_YUV2BGRA_Y422 = 112,
+            COLOR_YUV2RGBA_UYNV = 111,
+            COLOR_YUV2BGRA_UYNV = 112,
             COLOR_YUV2RGB_YUY2 = 115,
             COLOR_YUV2BGR_YUY2 = 116,
             COLOR_YUV2RGB_YVYU = 117,
             COLOR_YUV2BGR_YVYU = 118,
-            COLOR_YUV2RGB_YUYV = COLOR_YUV2RGB_YUY2,
-            COLOR_YUV2BGR_YUYV = COLOR_YUV2BGR_YUY2,
-            COLOR_YUV2RGB_YUNV = COLOR_YUV2RGB_YUY2,
-            COLOR_YUV2BGR_YUNV = COLOR_YUV2BGR_YUY2,
+            COLOR_YUV2RGB_YUYV = 115,
+            COLOR_YUV2BGR_YUYV = 116,
+            COLOR_YUV2RGB_YUNV = 115,
+            COLOR_YUV2BGR_YUNV = 116,
             COLOR_YUV2RGBA_YUY2 = 119,
             COLOR_YUV2BGRA_YUY2 = 120,
             COLOR_YUV2RGBA_YVYU = 121,
             COLOR_YUV2BGRA_YVYU = 122,
-            COLOR_YUV2RGBA_YUYV = COLOR_YUV2RGBA_YUY2,
-            COLOR_YUV2BGRA_YUYV = COLOR_YUV2BGRA_YUY2,
-            COLOR_YUV2RGBA_YUNV = COLOR_YUV2RGBA_YUY2,
-            COLOR_YUV2BGRA_YUNV = COLOR_YUV2BGRA_YUY2,
+            COLOR_YUV2RGBA_YUYV = 119,
+            COLOR_YUV2BGRA_YUYV = 120,
+            COLOR_YUV2RGBA_YUNV = 119,
+            COLOR_YUV2BGRA_YUNV = 120,
             COLOR_YUV2GRAY_UYVY = 123,
             COLOR_YUV2GRAY_YUY2 = 124,
-            COLOR_YUV2GRAY_Y422 = COLOR_YUV2GRAY_UYVY,
-            COLOR_YUV2GRAY_UYNV = COLOR_YUV2GRAY_UYVY,
-            COLOR_YUV2GRAY_YVYU = COLOR_YUV2GRAY_YUY2,
-            COLOR_YUV2GRAY_YUYV = COLOR_YUV2GRAY_YUY2,
-            COLOR_YUV2GRAY_YUNV = COLOR_YUV2GRAY_YUY2,
+            COLOR_YUV2GRAY_Y422 = 123,
+            COLOR_YUV2GRAY_UYNV = 123,
+            COLOR_YUV2GRAY_YVYU = 124,
+            COLOR_YUV2GRAY_YUYV = 124,
+            COLOR_YUV2GRAY_YUNV = 124,
             COLOR_RGBA2mRGBA = 125,
             COLOR_mRGBA2RGBA = 126,
             COLOR_RGB2YUV_I420 = 127,
             COLOR_BGR2YUV_I420 = 128,
-            COLOR_RGB2YUV_IYUV = COLOR_RGB2YUV_I420,
-            COLOR_BGR2YUV_IYUV = COLOR_BGR2YUV_I420,
+            COLOR_RGB2YUV_IYUV = 127,
+            COLOR_BGR2YUV_IYUV = 128,
             COLOR_RGBA2YUV_I420 = 129,
             COLOR_BGRA2YUV_I420 = 130,
-            COLOR_RGBA2YUV_IYUV = COLOR_RGBA2YUV_I420,
-            COLOR_BGRA2YUV_IYUV = COLOR_BGRA2YUV_I420,
+            COLOR_RGBA2YUV_IYUV = 129,
+            COLOR_BGRA2YUV_IYUV = 130,
             COLOR_RGB2YUV_YV12 = 131,
             COLOR_BGR2YUV_YV12 = 132,
             COLOR_RGBA2YUV_YV12 = 133,
@@ -387,10 +419,10 @@ public class Imgproc {
             COLOR_BayerGB2BGR = 47,
             COLOR_BayerRG2BGR = 48,
             COLOR_BayerGR2BGR = 49,
-            COLOR_BayerBG2RGB = COLOR_BayerRG2BGR,
-            COLOR_BayerGB2RGB = COLOR_BayerGR2BGR,
-            COLOR_BayerRG2RGB = COLOR_BayerBG2BGR,
-            COLOR_BayerGR2RGB = COLOR_BayerGB2BGR,
+            COLOR_BayerBG2RGB = 48,
+            COLOR_BayerGB2RGB = 49,
+            COLOR_BayerRG2RGB = 46,
+            COLOR_BayerGR2RGB = 47,
             COLOR_BayerBG2GRAY = 86,
             COLOR_BayerGB2GRAY = 87,
             COLOR_BayerRG2GRAY = 88,
@@ -399,49 +431,141 @@ public class Imgproc {
             COLOR_BayerGB2BGR_VNG = 63,
             COLOR_BayerRG2BGR_VNG = 64,
             COLOR_BayerGR2BGR_VNG = 65,
-            COLOR_BayerBG2RGB_VNG = COLOR_BayerRG2BGR_VNG,
-            COLOR_BayerGB2RGB_VNG = COLOR_BayerGR2BGR_VNG,
-            COLOR_BayerRG2RGB_VNG = COLOR_BayerBG2BGR_VNG,
-            COLOR_BayerGR2RGB_VNG = COLOR_BayerGB2BGR_VNG,
+            COLOR_BayerBG2RGB_VNG = 64,
+            COLOR_BayerGB2RGB_VNG = 65,
+            COLOR_BayerRG2RGB_VNG = 62,
+            COLOR_BayerGR2RGB_VNG = 63,
             COLOR_BayerBG2BGR_EA = 135,
             COLOR_BayerGB2BGR_EA = 136,
             COLOR_BayerRG2BGR_EA = 137,
             COLOR_BayerGR2BGR_EA = 138,
-            COLOR_BayerBG2RGB_EA = COLOR_BayerRG2BGR_EA,
-            COLOR_BayerGB2RGB_EA = COLOR_BayerGR2BGR_EA,
-            COLOR_BayerRG2RGB_EA = COLOR_BayerBG2BGR_EA,
-            COLOR_BayerGR2RGB_EA = COLOR_BayerGB2BGR_EA,
+            COLOR_BayerBG2RGB_EA = 137,
+            COLOR_BayerGB2RGB_EA = 138,
+            COLOR_BayerRG2RGB_EA = 135,
+            COLOR_BayerGR2RGB_EA = 136,
             COLOR_BayerBG2BGRA = 139,
             COLOR_BayerGB2BGRA = 140,
             COLOR_BayerRG2BGRA = 141,
             COLOR_BayerGR2BGRA = 142,
-            COLOR_BayerBG2RGBA = COLOR_BayerRG2BGRA,
-            COLOR_BayerGB2RGBA = COLOR_BayerGR2BGRA,
-            COLOR_BayerRG2RGBA = COLOR_BayerBG2BGRA,
-            COLOR_BayerGR2RGBA = COLOR_BayerGB2BGRA,
-            COLOR_COLORCVT_MAX = 143,
+            COLOR_BayerBG2RGBA = 141,
+            COLOR_BayerGB2RGBA = 142,
+            COLOR_BayerRG2RGBA = 139,
+            COLOR_BayerGR2RGBA = 140,
+            COLOR_COLORCVT_MAX = 143;
+
+
+    // C++: enum RectanglesIntersectTypes
+    public static final int
             INTERSECT_NONE = 0,
             INTERSECT_PARTIAL = 1,
-            INTERSECT_FULL = 2,
+            INTERSECT_FULL = 2;
+
+
+    // C++: enum ThresholdTypes
+    public static final int
+            THRESH_BINARY = 0,
+            THRESH_BINARY_INV = 1,
+            THRESH_TRUNC = 2,
+            THRESH_TOZERO = 3,
+            THRESH_TOZERO_INV = 4,
+            THRESH_MASK = 7,
+            THRESH_OTSU = 8,
+            THRESH_TRIANGLE = 16;
+
+
+    // C++: enum AdaptiveThresholdTypes
+    public static final int
+            ADAPTIVE_THRESH_MEAN_C = 0,
+            ADAPTIVE_THRESH_GAUSSIAN_C = 1;
+
+
+    // C++: enum MorphShapes_c
+    public static final int
+            CV_SHAPE_RECT = 0,
+            CV_SHAPE_CROSS = 1,
+            CV_SHAPE_ELLIPSE = 2,
+            CV_SHAPE_CUSTOM = 100;
+
+
+    // C++: enum RetrievalModes
+    public static final int
+            RETR_EXTERNAL = 0,
+            RETR_LIST = 1,
+            RETR_CCOMP = 2,
+            RETR_TREE = 3,
+            RETR_FLOODFILL = 4;
+
+
+    // C++: enum MorphShapes
+    public static final int
+            MORPH_RECT = 0,
+            MORPH_CROSS = 1,
+            MORPH_ELLIPSE = 2;
+
+
+    // C++: enum DistanceTransformLabelTypes
+    public static final int
+            DIST_LABEL_CCOMP = 0,
+            DIST_LABEL_PIXEL = 1;
+
+
+    // C++: enum DistanceTypes
+    public static final int
+            DIST_USER = -1,
+            DIST_L1 = 1,
+            DIST_L2 = 2,
+            DIST_C = 3,
+            DIST_L12 = 4,
+            DIST_FAIR = 5,
+            DIST_WELSCH = 6,
+            DIST_HUBER = 7;
+
+
+    // C++: enum LineSegmentDetectorModes
+    public static final int
+            LSD_REFINE_NONE = 0,
+            LSD_REFINE_STD = 1,
+            LSD_REFINE_ADV = 2;
+
+
+    // C++: enum TemplateMatchModes
+    public static final int
             TM_SQDIFF = 0,
             TM_SQDIFF_NORMED = 1,
             TM_CCORR = 2,
             TM_CCORR_NORMED = 3,
             TM_CCOEFF = 4,
-            TM_CCOEFF_NORMED = 5,
-            COLORMAP_AUTUMN = 0,
-            COLORMAP_BONE = 1,
-            COLORMAP_JET = 2,
-            COLORMAP_WINTER = 3,
-            COLORMAP_RAINBOW = 4,
-            COLORMAP_OCEAN = 5,
-            COLORMAP_SUMMER = 6,
-            COLORMAP_SPRING = 7,
-            COLORMAP_COOL = 8,
-            COLORMAP_HSV = 9,
-            COLORMAP_PINK = 10,
-            COLORMAP_HOT = 11,
-            COLORMAP_PARULA = 12,
+            TM_CCOEFF_NORMED = 5;
+
+
+    // C++: enum DistanceTransformMasks
+    public static final int
+            DIST_MASK_3 = 3,
+            DIST_MASK_5 = 5,
+            DIST_MASK_PRECISE = 0;
+
+
+    // C++: enum ConnectedComponentsTypes
+    public static final int
+            CC_STAT_LEFT = 0,
+            CC_STAT_TOP = 1,
+            CC_STAT_WIDTH = 2,
+            CC_STAT_HEIGHT = 3,
+            CC_STAT_AREA = 4,
+            CC_STAT_MAX = 5;
+
+
+    // C++: enum SmoothMethod_c
+    public static final int
+            CV_BLUR_NO_SCALE = 0,
+            CV_BLUR = 1,
+            CV_GAUSSIAN = 2,
+            CV_MEDIAN = 3,
+            CV_BILATERAL = 4;
+
+
+    // C++: enum MarkerTypes
+    public static final int
             MARKER_CROSS = 0,
             MARKER_TILTED_CROSS = 1,
             MARKER_STAR = 2,

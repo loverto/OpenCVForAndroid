@@ -17,6 +17,7 @@ public class AgastFeatureDetector extends Feature2D {
     // internal usage only
     public static AgastFeatureDetector __fromPtr__(long addr) { return new AgastFeatureDetector(addr); }
 
+    // C++: enum <unnamed>
     public static final int
             AGAST_5_8 = 0,
             AGAST_7_12d = 1,

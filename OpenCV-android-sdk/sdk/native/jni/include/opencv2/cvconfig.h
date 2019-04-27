@@ -136,6 +136,9 @@
 /* #undef HAVE_OPENCL_STATIC */
 /* #undef HAVE_OPENCL_SVM */
 
+/* NVIDIA OpenCL D3D Extensions support */
+/* #undef HAVE_OPENCL_D3D11_NV */
+
 /* OpenEXR codec */
 #define HAVE_OPENEXR
 

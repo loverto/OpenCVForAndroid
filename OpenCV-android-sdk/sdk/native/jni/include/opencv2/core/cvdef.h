@@ -200,6 +200,16 @@ namespace cv { namespace debug_build_guard { } using namespace debug_build_guard
 #  endif
 #endif
 
+#ifndef CV_ALWAYS_INLINE
+#if defined(__GNUC__) && (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1))
+#define CV_ALWAYS_INLINE inline __attribute__((always_inline))
+#elif defined(_MSC_VER)
+#define CV_ALWAYS_INLINE __forceinline
+#else
+#define CV_ALWAYS_INLINE inline
+#endif
+#endif
+
 #if defined CV_DISABLE_OPTIMIZATION || (defined CV_ICC && !defined CV_ENABLE_UNROLLED)
 #  define CV_ENABLE_UNROLLED 0
 #else
@@ -463,7 +473,7 @@ Cv64suf;
 #ifdef CV_XADD
   // allow to use user-defined macro
 #elif defined __GNUC__ || defined __clang__
-#  if defined __clang__ && __clang_major__ >= 3 && !defined __ANDROID__ && !defined __EMSCRIPTEN__ && !defined(__CUDACC__)
+#  if defined __clang__ && __clang_major__ >= 3 && !defined __ANDROID__ && !defined __EMSCRIPTEN__ && !defined(__CUDACC__)  && !defined __INTEL_COMPILER
 #    ifdef __ATOMIC_ACQ_REL
 #      define CV_XADD(addr, delta) __c11_atomic_fetch_add((_Atomic(int)*)(addr), delta, __ATOMIC_ACQ_REL)
 #    else
@@ -555,7 +565,7 @@ Cv64suf;
 \****************************************************************************************/
 
 #ifndef CV_CXX_STD_ARRAY
-#  if __cplusplus >= 201103L || (defined(_MSC_VER) && _MSC_VER >= 1900/*MSVS 2015*/)
+#  if __cplusplus >= 201103L || (defined(__cplusplus) && defined(_MSC_VER) && _MSC_VER >= 1900/*MSVS 2015*/)
 #    define CV_CXX_STD_ARRAY 1
 #    include <array>
 #  endif

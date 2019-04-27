@@ -17,10 +17,15 @@ import org.opencv.utils.Converters;
 
 public class Features2d {
 
+    // C++: enum <unnamed>
     public static final int
             DRAW_OVER_OUTIMG = 1,
             NOT_DRAW_SINGLE_POINTS = 2,
-            DRAW_RICH_KEYPOINTS = 4;
+            DRAW_RICH_KEYPOINTS = 4,
+            DrawMatchesFlags_DEFAULT = 0,
+            DrawMatchesFlags_DRAW_OVER_OUTIMG = 1,
+            DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS = 2,
+            DrawMatchesFlags_DRAW_RICH_KEYPOINTS = 4;
 
 
     //

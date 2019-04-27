@@ -20,6 +20,16 @@ import org.opencv.utils.Converters;
 
 public class Calib3d {
 
+    // C++: enum HandEyeCalibrationMethod
+    public static final int
+            CALIB_HAND_EYE_TSAI = 0,
+            CALIB_HAND_EYE_PARK = 1,
+            CALIB_HAND_EYE_HORAUD = 2,
+            CALIB_HAND_EYE_ANDREFF = 3,
+            CALIB_HAND_EYE_DANIILIDIS = 4;
+
+
+    // C++: enum <unnamed>
     public static final int
             CALIB_USE_INTRINSIC_GUESS = 1,
             CALIB_RECOMPUTE_EXTRINSIC = 2,
@@ -34,6 +44,10 @@ public class Calib3d {
             CV_EPNP = 1,
             CV_P3P = 2,
             CV_DLS = 3,
+            CvLevMarq_DONE = 0,
+            CvLevMarq_STARTED = 1,
+            CvLevMarq_CALC_J = 2,
+            CvLevMarq_CHECK_ERR = 3,
             LMEDS = 4,
             RANSAC = 8,
             RHO = 16,
@@ -82,6 +96,12 @@ public class Calib3d {
             fisheye_CALIB_FIX_K4 = 1 << 7,
             fisheye_CALIB_FIX_INTRINSIC = 1 << 8,
             fisheye_CALIB_FIX_PRINCIPAL_POINT = 1 << 9;
+
+
+    // C++: enum GridType
+    public static final int
+            CirclesGridFinderParameters_SYMMETRIC_GRID = 0,
+            CirclesGridFinderParameters_ASYMMETRIC_GRID = 1;
 
 
     //
@@ -1273,6 +1293,35 @@ public class Calib3d {
 
 
     //
+    // C++:  void cv::calibrateHandEye(vector_Mat R_gripper2base, vector_Mat t_gripper2base, vector_Mat R_target2cam, vector_Mat t_target2cam, Mat& R_cam2gripper, Mat& t_cam2gripper, HandEyeCalibrationMethod method = CALIB_HAND_EYE_TSAI)
+    //
+
+    //javadoc: calibrateHandEye(R_gripper2base, t_gripper2base, R_target2cam, t_target2cam, R_cam2gripper, t_cam2gripper, method)
+    public static void calibrateHandEye(List<Mat> R_gripper2base, List<Mat> t_gripper2base, List<Mat> R_target2cam, List<Mat> t_target2cam, Mat R_cam2gripper, Mat t_cam2gripper, int method)
+    {
+        Mat R_gripper2base_mat = Converters.vector_Mat_to_Mat(R_gripper2base);
+        Mat t_gripper2base_mat = Converters.vector_Mat_to_Mat(t_gripper2base);
+        Mat R_target2cam_mat = Converters.vector_Mat_to_Mat(R_target2cam);
+        Mat t_target2cam_mat = Converters.vector_Mat_to_Mat(t_target2cam);
+        calibrateHandEye_0(R_gripper2base_mat.nativeObj, t_gripper2base_mat.nativeObj, R_target2cam_mat.nativeObj, t_target2cam_mat.nativeObj, R_cam2gripper.nativeObj, t_cam2gripper.nativeObj, method);
+        
+        return;
+    }
+
+    //javadoc: calibrateHandEye(R_gripper2base, t_gripper2base, R_target2cam, t_target2cam, R_cam2gripper, t_cam2gripper)
+    public static void calibrateHandEye(List<Mat> R_gripper2base, List<Mat> t_gripper2base, List<Mat> R_target2cam, List<Mat> t_target2cam, Mat R_cam2gripper, Mat t_cam2gripper)
+    {
+        Mat R_gripper2base_mat = Converters.vector_Mat_to_Mat(R_gripper2base);
+        Mat t_gripper2base_mat = Converters.vector_Mat_to_Mat(t_gripper2base);
+        Mat R_target2cam_mat = Converters.vector_Mat_to_Mat(R_target2cam);
+        Mat t_target2cam_mat = Converters.vector_Mat_to_Mat(t_target2cam);
+        calibrateHandEye_1(R_gripper2base_mat.nativeObj, t_gripper2base_mat.nativeObj, R_target2cam_mat.nativeObj, t_target2cam_mat.nativeObj, R_cam2gripper.nativeObj, t_cam2gripper.nativeObj);
+        
+        return;
+    }
+
+
+    //
     // C++:  void cv::calibrationMatrixValues(Mat cameraMatrix, Size imageSize, double apertureWidth, double apertureHeight, double& fovx, double& fovy, double& focalLength, Point2d& principalPoint, double& aspectRatio)
     //
 
@@ -2143,6 +2192,10 @@ public class Calib3d {
     // C++:  void cv::Rodrigues(Mat src, Mat& dst, Mat& jacobian = Mat())
     private static native void Rodrigues_0(long src_nativeObj, long dst_nativeObj, long jacobian_nativeObj);
     private static native void Rodrigues_1(long src_nativeObj, long dst_nativeObj);
+
+    // C++:  void cv::calibrateHandEye(vector_Mat R_gripper2base, vector_Mat t_gripper2base, vector_Mat R_target2cam, vector_Mat t_target2cam, Mat& R_cam2gripper, Mat& t_cam2gripper, HandEyeCalibrationMethod method = CALIB_HAND_EYE_TSAI)
+    private static native void calibrateHandEye_0(long R_gripper2base_mat_nativeObj, long t_gripper2base_mat_nativeObj, long R_target2cam_mat_nativeObj, long t_target2cam_mat_nativeObj, long R_cam2gripper_nativeObj, long t_cam2gripper_nativeObj, int method);
+    private static native void calibrateHandEye_1(long R_gripper2base_mat_nativeObj, long t_gripper2base_mat_nativeObj, long R_target2cam_mat_nativeObj, long t_target2cam_mat_nativeObj, long R_cam2gripper_nativeObj, long t_cam2gripper_nativeObj);
 
     // C++:  void cv::calibrationMatrixValues(Mat cameraMatrix, Size imageSize, double apertureWidth, double apertureHeight, double& fovx, double& fovy, double& focalLength, Point2d& principalPoint, double& aspectRatio)
     private static native void calibrationMatrixValues_0(long cameraMatrix_nativeObj, double imageSize_width, double imageSize_height, double apertureWidth, double apertureHeight, double[] fovx_out, double[] fovy_out, double[] focalLength_out, double[] principalPoint_out, double[] aspectRatio_out);

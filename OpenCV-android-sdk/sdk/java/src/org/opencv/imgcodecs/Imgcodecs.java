@@ -16,6 +16,60 @@ import org.opencv.utils.Converters;
 
 public class Imgcodecs {
 
+    // C++: enum ImwriteEXRTypeFlags
+    public static final int
+            IMWRITE_EXR_TYPE_HALF = 1,
+            IMWRITE_EXR_TYPE_FLOAT = 2;
+
+
+    // C++: enum ImwritePNGFlags
+    public static final int
+            IMWRITE_PNG_STRATEGY_DEFAULT = 0,
+            IMWRITE_PNG_STRATEGY_FILTERED = 1,
+            IMWRITE_PNG_STRATEGY_HUFFMAN_ONLY = 2,
+            IMWRITE_PNG_STRATEGY_RLE = 3,
+            IMWRITE_PNG_STRATEGY_FIXED = 4;
+
+
+    // C++: enum ImwriteFlags
+    public static final int
+            IMWRITE_JPEG_QUALITY = 1,
+            IMWRITE_JPEG_PROGRESSIVE = 2,
+            IMWRITE_JPEG_OPTIMIZE = 3,
+            IMWRITE_JPEG_RST_INTERVAL = 4,
+            IMWRITE_JPEG_LUMA_QUALITY = 5,
+            IMWRITE_JPEG_CHROMA_QUALITY = 6,
+            IMWRITE_PNG_COMPRESSION = 16,
+            IMWRITE_PNG_STRATEGY = 17,
+            IMWRITE_PNG_BILEVEL = 18,
+            IMWRITE_PXM_BINARY = 32,
+            IMWRITE_EXR_TYPE = (3 << 4) + 0,
+            IMWRITE_WEBP_QUALITY = 64,
+            IMWRITE_PAM_TUPLETYPE = 128,
+            IMWRITE_TIFF_RESUNIT = 256,
+            IMWRITE_TIFF_XDPI = 257,
+            IMWRITE_TIFF_YDPI = 258,
+            IMWRITE_TIFF_COMPRESSION = 259;
+
+
+    // C++: enum ImreadModes
+    public static final int
+            IMREAD_UNCHANGED = -1,
+            IMREAD_GRAYSCALE = 0,
+            IMREAD_COLOR = 1,
+            IMREAD_ANYDEPTH = 2,
+            IMREAD_ANYCOLOR = 4,
+            IMREAD_LOAD_GDAL = 8,
+            IMREAD_REDUCED_GRAYSCALE_2 = 16,
+            IMREAD_REDUCED_COLOR_2 = 17,
+            IMREAD_REDUCED_GRAYSCALE_4 = 32,
+            IMREAD_REDUCED_COLOR_4 = 33,
+            IMREAD_REDUCED_GRAYSCALE_8 = 64,
+            IMREAD_REDUCED_COLOR_8 = 65,
+            IMREAD_IGNORE_ORIENTATION = 128;
+
+
+    // C++: enum <unnamed>
     public static final int
             CV_LOAD_IMAGE_UNCHANGED = -1,
             CV_LOAD_IMAGE_GRAYSCALE = 0,
@@ -48,43 +102,11 @@ public class Imgcodecs {
             CV_IMWRITE_PAM_FORMAT_RGB = 4,
             CV_IMWRITE_PAM_FORMAT_RGB_ALPHA = 5,
             CV_CVTIMG_FLIP = 1,
-            CV_CVTIMG_SWAP_RB = 2,
-            IMREAD_UNCHANGED = -1,
-            IMREAD_GRAYSCALE = 0,
-            IMREAD_COLOR = 1,
-            IMREAD_ANYDEPTH = 2,
-            IMREAD_ANYCOLOR = 4,
-            IMREAD_LOAD_GDAL = 8,
-            IMREAD_REDUCED_GRAYSCALE_2 = 16,
-            IMREAD_REDUCED_COLOR_2 = 17,
-            IMREAD_REDUCED_GRAYSCALE_4 = 32,
-            IMREAD_REDUCED_COLOR_4 = 33,
-            IMREAD_REDUCED_GRAYSCALE_8 = 64,
-            IMREAD_REDUCED_COLOR_8 = 65,
-            IMREAD_IGNORE_ORIENTATION = 128,
-            IMWRITE_JPEG_QUALITY = 1,
-            IMWRITE_JPEG_PROGRESSIVE = 2,
-            IMWRITE_JPEG_OPTIMIZE = 3,
-            IMWRITE_JPEG_RST_INTERVAL = 4,
-            IMWRITE_JPEG_LUMA_QUALITY = 5,
-            IMWRITE_JPEG_CHROMA_QUALITY = 6,
-            IMWRITE_PNG_COMPRESSION = 16,
-            IMWRITE_PNG_STRATEGY = 17,
-            IMWRITE_PNG_BILEVEL = 18,
-            IMWRITE_PXM_BINARY = 32,
-            IMWRITE_EXR_TYPE = (3 << 4) + 0,
-            IMWRITE_WEBP_QUALITY = 64,
-            IMWRITE_PAM_TUPLETYPE = 128,
-            IMWRITE_TIFF_RESUNIT = 256,
-            IMWRITE_TIFF_XDPI = 257,
-            IMWRITE_TIFF_YDPI = 258,
-            IMWRITE_EXR_TYPE_HALF = 1,
-            IMWRITE_EXR_TYPE_FLOAT = 2,
-            IMWRITE_PNG_STRATEGY_DEFAULT = 0,
-            IMWRITE_PNG_STRATEGY_FILTERED = 1,
-            IMWRITE_PNG_STRATEGY_HUFFMAN_ONLY = 2,
-            IMWRITE_PNG_STRATEGY_RLE = 3,
-            IMWRITE_PNG_STRATEGY_FIXED = 4,
+            CV_CVTIMG_SWAP_RB = 2;
+
+
+    // C++: enum ImwritePAMFlags
+    public static final int
             IMWRITE_PAM_FORMAT_NULL = 0,
             IMWRITE_PAM_FORMAT_BLACKANDWHITE = 1,
             IMWRITE_PAM_FORMAT_GRAYSCALE = 2,

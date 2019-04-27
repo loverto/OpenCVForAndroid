@@ -28,6 +28,7 @@ public class DescriptorExtractor {
             OPPONENTEXTRACTOR = 1000;
 
 
+    // C++: enum <unnamed>
     public static final int
             SIFT = 1,
             SURF = 2,

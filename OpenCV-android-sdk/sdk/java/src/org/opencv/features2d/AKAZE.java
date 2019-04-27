@@ -17,6 +17,7 @@ public class AKAZE extends Feature2D {
     // internal usage only
     public static AKAZE __fromPtr__(long addr) { return new AKAZE(addr); }
 
+    // C++: enum <unnamed>
     public static final int
             DESCRIPTOR_KAZE_UPRIGHT = 2,
             DESCRIPTOR_KAZE = 3,

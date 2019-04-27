@@ -17,6 +17,7 @@ public class FastFeatureDetector extends Feature2D {
     // internal usage only
     public static FastFeatureDetector __fromPtr__(long addr) { return new FastFeatureDetector(addr); }
 
+    // C++: enum <unnamed>
     public static final int
             TYPE_5_8 = 0,
             TYPE_7_12 = 1,

@@ -17,6 +17,7 @@ public class ORB extends Feature2D {
     // internal usage only
     public static ORB __fromPtr__(long addr) { return new ORB(addr); }
 
+    // C++: enum <unnamed>
     public static final int
             kBytes = 32,
             HARRIS_SCORE = 0,

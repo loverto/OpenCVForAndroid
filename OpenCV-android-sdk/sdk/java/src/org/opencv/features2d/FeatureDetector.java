@@ -30,6 +30,7 @@ public class FeatureDetector {
             DYNAMICDETECTOR = 3000;
 
 
+    // C++: enum <unnamed>
     public static final int
             FAST = 1,
             STAR = 2,

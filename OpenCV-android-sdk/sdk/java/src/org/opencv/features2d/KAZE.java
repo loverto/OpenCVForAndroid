@@ -17,6 +17,7 @@ public class KAZE extends Feature2D {
     // internal usage only
     public static KAZE __fromPtr__(long addr) { return new KAZE(addr); }
 
+    // C++: enum <unnamed>
     public static final int
             DIFF_PM_G1 = 0,
             DIFF_PM_G2 = 1,

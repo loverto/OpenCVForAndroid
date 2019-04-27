@@ -23,11 +23,16 @@ import org.opencv.utils.Converters;
 
 public class Dnn {
 
+    // C++: enum Backend
     public static final int
             DNN_BACKEND_DEFAULT = 0,
             DNN_BACKEND_HALIDE = 1,
             DNN_BACKEND_INFERENCE_ENGINE = 2,
-            DNN_BACKEND_OPENCV = 3,
+            DNN_BACKEND_OPENCV = 3;
+
+
+    // C++: enum Target
+    public static final int
             DNN_TARGET_CPU = 0,
             DNN_TARGET_OPENCL = 1,
             DNN_TARGET_OPENCL_FP16 = 2,
@@ -466,6 +471,20 @@ public class Dnn {
 
 
     //
+    // C++:  String cv::dnn::getInferenceEngineVPUType()
+    //
+
+    //javadoc: getInferenceEngineVPUType()
+    public static String getInferenceEngineVPUType()
+    {
+        
+        String retVal = getInferenceEngineVPUType_0();
+        
+        return retVal;
+    }
+
+
+    //
     // C++:  void cv::dnn::NMSBoxes(vector_Rect bboxes, vector_float scores, float score_threshold, float nms_threshold, vector_int& indices, float eta = 1.f, int top_k = 0)
     //
 
@@ -715,6 +734,9 @@ public class Dnn {
     private static native long readNetFromTorch_0(String model, boolean isBinary, boolean evaluate);
     private static native long readNetFromTorch_1(String model, boolean isBinary);
     private static native long readNetFromTorch_2(String model);
+
+    // C++:  String cv::dnn::getInferenceEngineVPUType()
+    private static native String getInferenceEngineVPUType_0();
 
     // C++:  void cv::dnn::NMSBoxes(vector_Rect bboxes, vector_float scores, float score_threshold, float nms_threshold, vector_int& indices, float eta = 1.f, int top_k = 0)
     private static native void NMSBoxes_0(long bboxes_mat_nativeObj, long scores_mat_nativeObj, float score_threshold, float nms_threshold, long indices_mat_nativeObj, float eta, int top_k);

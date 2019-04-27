@@ -22,6 +22,7 @@ public class DescriptorMatcher extends Algorithm {
     // internal usage only
     public static DescriptorMatcher __fromPtr__(long addr) { return new DescriptorMatcher(addr); }
 
+    // C++: enum <unnamed>
     public static final int
             FLANNBASED = 1,
             BRUTEFORCE = 2,

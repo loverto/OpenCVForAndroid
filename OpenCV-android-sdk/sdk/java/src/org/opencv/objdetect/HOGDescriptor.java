@@ -27,6 +27,7 @@ public class HOGDescriptor {
     // internal usage only
     public static HOGDescriptor __fromPtr__(long addr) { return new HOGDescriptor(addr); }
 
+    // C++: enum <unnamed>
     public static final int
             L2Hys = 0,
             DEFAULT_NLEVELS = 64;

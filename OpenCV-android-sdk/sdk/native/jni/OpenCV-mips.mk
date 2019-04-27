@@ -1,2 +1,2 @@
-OPENCV_3RDPARTY_COMPONENTS:=libjpeg-turbo libwebp libpng libtiff libjasper IlmImf libprotobuf quirc tbb cpufeatures
+OPENCV_3RDPARTY_COMPONENTS:=quirc libprotobuf tbb cpufeatures libjpeg-turbo libwebp libpng libtiff libjasper IlmImf
 OPENCV_EXTRA_COMPONENTS:=z dl m log
